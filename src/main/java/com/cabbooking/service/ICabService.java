@@ -10,7 +10,7 @@ public interface ICabService {
 	
 	public Cab addCab(Cab cab) ;
 
-	public Cab updateCab(Cab cab);
+	public Cab updateCab(Cab cab,int cabId);
 
 	public List<Cab> viewCabs();
 

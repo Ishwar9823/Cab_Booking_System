@@ -3,6 +3,7 @@ package com.cabbooking.serviceimpl;
 import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowire;
@@ -36,15 +37,26 @@ public class ICabServiceImpl implements ICabService{
 	}
 
 	@Override
-	public Cab updateCab(Cab cab) {
+	public Cab updateCab(Cab cab,int cabId) {
 		Optional<Cab> check = cabRepo.findById(cab.getCabId());
 		Cab updateCab = check.get();
 		if(check.isPresent()) {
-			updateCab.setCabType(cab.getCabType());
-			updateCab.setRatePerKm(cab.getRatePerKm());
-			updateCab.setRegistrationNo(cab.getRegistrationNo());
-			updateCab.setCabAvailability(cab.getCabAvailability());
-			updateCab.setCurrentLocation(cab.getCurrentLocation());
+			if(Objects.nonNull(cab.getCabType()))
+		     {
+				updateCab.setCabType(cab.getCabType());
+			}
+			if(Objects.nonNull(cab.getRatePerKm())) {
+				updateCab.setRatePerKm(cab.getRatePerKm());
+			}
+			if(Objects.nonNull(cab.getRegistrationNo())) {
+				updateCab.setRegistrationNo(cab.getRegistrationNo());
+			}
+			if(Objects.nonNull(cab.getCabAvailability())) {
+				updateCab.setCabAvailability(cab.getCabAvailability());
+			}
+			if(Objects.nonNull(cab.getCurrentLocation())) {
+				updateCab.setCurrentLocation(cab.getCurrentLocation());
+			}
 			cabRepo.save(updateCab);
 			return updateCab;
 		}
@@ -53,9 +65,8 @@ public class ICabServiceImpl implements ICabService{
 
 	@Override
 	public List<Cab> viewCabs() {
-		List<Cab> viewList = new ArrayList<>();
-		cabRepo.saveAll(viewList);
-		return viewList;
+		List<Cab> allCab = cabRepo.findAll();
+		return allCab;
 	}
 
 	@Override
@@ -63,57 +74,61 @@ public class ICabServiceImpl implements ICabService{
 		List<Cab> viewCabsOfTyp = new ArrayList<>();
 		List<Cab> allCab = cabRepo.findAll();
 		for(Cab cab:allCab) {
-			if(cab.getCabType().equals(cabType)) {
+			String carName = cab.getCabType().toString();
+			if(carName.equals(cabType)){
 			viewCabsOfTyp.add(cab);
 			}
 		}
-		if(!viewCabsOfTyp.isEmpty()) {
-			return viewCabsOfTyp;
-		}
-		else {
-			return null;
-		}
+		return viewCabsOfTyp;
+//		if(!viewCabsOfTyp.isEmpty()) {
+//			return viewCabsOfTyp;
+//		}
+//		else {
+//			return null;
+//		}
 	}
 
 	@Override
 	public List<Cab> viewCabByCurrentLocation(String currentLocation) {
-		List<Cab> viewCabsOfLoc = new ArrayList<>();
+		List<Cab> viewCabsByLoc = new ArrayList<>();
 		List<Cab> allCab = cabRepo.findAll();
 		for(Cab cab:allCab) {
 			if(cab.getCurrentLocation().equals(currentLocation)) {
-			viewCabsOfLoc.add(cab);
+				viewCabsByLoc.add(cab);
 			}
 		}
-		if(!viewCabsOfLoc.isEmpty()) {
-			return viewCabsOfLoc;
-		}
-		else {
-			return null;
-		}
+//		if(!viewCabsOfLoc.isEmpty()) {
+//			return viewCabsOfLoc;
+//		}
+//		else {
+//			return null;
+//		}
+		return viewCabsByLoc;
 
 	}
 
 	@Override
 	public Cab viewCabByDriverId(int driverId) {
 		Optional<Cab> check = cabRepo.findById(driverId);
-		if(check.isPresent()) {
-			return check.get();
-		}
-		else {
-			return null;
-		}
-		
+//		if(check.isPresent()) {
+//			return check.get();
+//		}
+//		else {
+//			return null;
+//		}
+		return check.get();
 	}
 
 	@Override
 	public Cab viewCabById(int cabId) {
 		Optional<Cab> check = cabRepo.findById(cabId);
-		if(check.isPresent()) {
-			return check.get();
-		}
-		else {
-			return null;
-		}
+//		if(check.isPresent()) {
+//			return check.get();
+//		}
+//		else {
+//			return null;
+//		}
+		return check.get();
 	}
 
 	@Override
@@ -121,16 +136,18 @@ public class ICabServiceImpl implements ICabService{
 		List<Cab> viewCabs = new ArrayList<>();
 		List<Cab> allCab = cabRepo.findAll();
 		for(Cab cab : allCab) {
-			if(cab.getCurrentLocation().equals(currentLocation)&& cab.getCabType().equals(cabType)) {
+			String cabName = cab.getCabType().toString();
+			if(cab.getCurrentLocation().equals(currentLocation)&& cabName.equals(cabType)) {
 				viewCabs.add(cab);
 			}
 		}
-		if(!viewCabs.isEmpty()) {
-			return viewCabs;
-		}
-		else {
-			return null;
-		}
+//		if(!viewCabs.isEmpty()) {
+//			return viewCabs;
+//		}
+//		else {
+//			return null;
+//		}
+		return viewCabs;
 
 	}
 
@@ -139,16 +156,17 @@ public class ICabServiceImpl implements ICabService{
 		List<Cab> viewCabByAva = new ArrayList<>();
 		List<Cab> allCab = cabRepo.findAll();
 		for(Cab cab : allCab) {
-			if(cab.getCabAvailability()) {
+			if(cab.getCabAvailability()==true) {
 				viewCabByAva.add(cab);
 			}
 		}
-		if(!viewCabByAva.isEmpty()) {
-			return viewCabByAva;
-		}
-		else {
-			return null;
-		}
+//		if(!viewCabByAva.isEmpty()) {
+//			return viewCabByAva;
+//		}
+//		else {
+//			return null;
+//		}
+		return viewCabByAva;
 	}
 
 }

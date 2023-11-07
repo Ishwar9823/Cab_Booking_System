@@ -22,7 +22,6 @@ import lombok.ToString;
 
 
 @Entity
-@Table(name="Cab")
 public class Cab {
 	
 	@Id
@@ -33,9 +32,8 @@ public class Cab {
 	private String registrationNo;
 	private Boolean cabAvailability;
 	private String currentLocation;
-	
-	@OneToOne
 	@JsonIgnore
+	@OneToOne
 	private Driver driver;
 	
 	public Cab(){}
