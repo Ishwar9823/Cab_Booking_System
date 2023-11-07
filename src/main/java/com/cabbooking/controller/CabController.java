@@ -20,12 +20,12 @@ public class CabController {
 	@Autowired
 	ICabServiceImpl iCabServiceImpl;
 	
-	@PostMapping("/register")
+	@PostMapping("/cabregister")
 	public Cab addCab(@RequestBody Cab cab)  {
 		return iCabServiceImpl.addCab(cab);
 	}
 	
-	@PutMapping("/update/{cabId}")
+	@PutMapping("/cabupdate/{cabId}")
 	public Cab updateCab(@RequestBody Cab cab,@PathVariable("cabId") int cabId) {
 		return iCabServiceImpl.updateCab(cab,cabId);
 	}

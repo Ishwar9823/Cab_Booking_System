@@ -3,14 +3,15 @@ package com.cabbooking.service;
 import java.util.List;
 
 import com.cabbooking.dto.CustomerDTO;
+import com.cabbooking.entity.Customer;
 
 public interface ICustomerService {
 
-	public CustomerDTO registerCustomer(CustomerDTO customer);
+	public Customer registerCustomer(Customer customer);
 
-	public CustomerDTO updateCustomer(CustomerDTO customer);
+	public Customer updateCustomer(Customer customer,int customerId);
 
-	public List<CustomerDTO> viewCustomers();
+	public List<Customer> viewCustomers();
 
-	public CustomerDTO viewCustomerById(Integer customerId);
+	public Customer viewCustomerById(Integer customerId);
 }
