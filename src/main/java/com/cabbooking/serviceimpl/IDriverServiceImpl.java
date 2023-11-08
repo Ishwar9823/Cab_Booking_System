@@ -19,7 +19,7 @@ public class IDriverServiceImpl implements IDriverService{
 	@Override
 	public Driver addDriver(Driver driver) {
 		// TODO Auto-generated method stub
-		if(driver.getRoles().equals("Customer")) {
+		if(driver.getRoles().equals("Driver")) {
 			return driverRepo.save(driver);
 		}
 		return null;

@@ -39,7 +39,7 @@ public class Ride {
 	private Cab cab;
 	
 	@JsonIgnore
-	@ManyToOne
+	@OneToOne
 	private Customer customer;
 	
 	public Ride() {

@@ -29,21 +29,13 @@ public class TripBooking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
-	
-	
 	private CabType cabType;
-	
 	private String pickupLocation;
-//	@Nonnull
 	private String dropoffLocation;
-//	@Nonnull
 	private LocalDateTime startDateTime;
-	@Nonnull
 	private BookingStatus bookingStatus;
 	// Could be generated randomly
-	
 	private Double distanceInKm;
-	
 	private Double bill;
 	
 	@JsonIgnore

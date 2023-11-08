@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cabbooking.dto.RideDTO;
 import com.cabbooking.entity.Ride;
@@ -13,13 +14,11 @@ import com.cabbooking.repository.CustomerRepo;
 import com.cabbooking.repository.RideRepo;
 import com.cabbooking.service.IRideService;
 
+@Service
 public class IRideServiceImpl implements IRideService {
 
 	@Autowired
 	RideRepo rideRepo;
-	
-	@Autowired
-	CustomerRepo customerRepo;
 	
 	@Override
 	public Ride addRide(Ride ride) {
@@ -106,10 +105,10 @@ public class IRideServiceImpl implements IRideService {
 		return rideRepo.findAll().stream().filter(e->e.getRideStatus().toString().equals(status)).collect((Collectors.toList()));
 	}
 
-
+	@Override
 	public List<Ride> viewRidesByDate(LocalDate date) {
 		// TODO Auto-generated method stu
-		return rideRepo.findAll().stream().filter(e->e.getEndTime().equals(date)).collect(Collectors.toList());
+		return rideRepo.findAll().stream().filter(e->e.getStartTime().toLocalDate().isEqual(date)).collect(Collectors.toList());
 	}
 
 	

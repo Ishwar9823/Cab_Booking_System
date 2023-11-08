@@ -4,26 +4,27 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.cabbooking.dto.TripBookingDTO;
+import com.cabbooking.entity.TripBooking;
 
 public interface ITripBookingService {
 
-	public TripBookingDTO addTripBooking(TripBookingDTO tripBooking);
+	public TripBooking addTripBooking(TripBooking tripBooking);
 
-	public TripBookingDTO updateTripBooking(TripBookingDTO tripBooking);
+	public TripBooking updateTripBooking(TripBooking tripBooking);
 
-	public TripBookingDTO cancleTripBooking(Integer tripBookingId);
+	public TripBooking cancleTripBooking(Integer tripBookingId);
 
-	public List<TripBookingDTO> viewAllBookings();
+	public List<TripBooking> viewAllBookings();
 
-	public TripBookingDTO viewBookingByBookingId(Integer tripBookingId);
+	public TripBooking viewBookingByBookingId(Integer tripBookingId);
 
-	public List<TripBookingDTO> viewBookingByCustomerId(Integer customerId);
+	public List<TripBooking> viewBookingByCustomerId(Integer customerId);
 
-	public List<TripBookingDTO> viewBookingByBookingStatus(String status);
+	public List<TripBooking> viewBookingByBookingStatus(String status);
 
-	public List<TripBookingDTO> viewBookingByCabType(String cabType);
+	public List<TripBooking> viewBookingByCabType(String cabType);
 
-	public List<TripBookingDTO> viewBookingsByDatewiseSortingOrder();
+	public List<TripBooking> viewBookingsByDatewiseSortingOrder();
 
-	public List<TripBookingDTO> viewBookingsByCustomerBasedOnDates(Integer customerId, LocalDate fromDate, LocalDate toDate);
+	public List<TripBooking> viewBookingsByCustomerBasedOnDates(Integer customerId, LocalDate fromDate, LocalDate toDate);
 }
