@@ -1,11 +1,19 @@
 package com.cabbooking.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
+@Table(name="Cab_User")
 public class User {
-	
+	@Id
+	private int userId;
 	private String userName;
 	private String password;
 	private String address;
@@ -15,11 +23,9 @@ public class User {
 	private String roles;
 	
 	public User() {
-		
 	}
-
 	public User( String userName, String password, String address, String mobileNumber, String email,
-			String roles) {
+			String roles,int userId) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -27,6 +33,7 @@ public class User {
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.roles = roles;
+		this.userId = userId;
 	}
 
 	public String getUserName() {
@@ -77,11 +84,21 @@ public class User {
 		this.roles = roles;
 	}
 
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + ", address=" + address
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", address=" + address
 				+ ", mobileNumber=" + mobileNumber + ", email=" + email + ", roles=" + roles + "]";
 	}
+
 	
 	
 }

@@ -3,16 +3,17 @@ package com.cabbooking.service;
 import java.util.List;
 
 import com.cabbooking.dto.DriverDTO;
+import com.cabbooking.entity.Driver;
 
 public interface IDriverService {
 
-	public DriverDTO addDriver(DriverDTO driver);
+	public Driver addDriver(Driver driver);
 
-	public DriverDTO updateDriver(DriverDTO driver);
+	public Driver updateDriver(Driver driver,int driverId);
 
-	public List<DriverDTO> viewDrivers();
+	public List<Driver> viewDrivers();
 
-	public DriverDTO viewDriverById(Integer driverId);
+	public Driver viewDriverById(Integer driverId);
 
-	public List<DriverDTO> viewDriverByAvailability();
+	public List<Driver> viewDriverByAvailability();
 }

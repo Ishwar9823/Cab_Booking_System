@@ -9,9 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 @Entity
 public class Driver extends User{
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int driverId;
+	
 	private String driverName;
 	private String licenseNo;
 	private Boolean driverAvailability;
@@ -28,7 +26,6 @@ public class Driver extends User{
 		this.driverName = driverName;
 		this.licenseNo = licenseNo;
 		this.driverAvailability = driverAvailability;
-		this.driverId = driverId;
 		this.cab = cab;
 	}
 	public String getDriverName() {
@@ -50,12 +47,7 @@ public class Driver extends User{
 		this.driverAvailability = driverAvailability;
 	}
 	
-	public int getDriverId() {
-		return driverId;
-	}
-	public void setDriverId(int driverId) {
-		this.driverId = driverId;
-	}
+	
 	
 	public Cab getCab() {
 		return cab;
@@ -65,9 +57,10 @@ public class Driver extends User{
 	}
 	@Override
 	public String toString() {
-		return "Driver [driverId=" + driverId + ", driverName=" + driverName + ", licenseNo=" + licenseNo
+		return "Driver [driverName=" + driverName + ", licenseNo=" + licenseNo
 				+ ", driverAvailability=" + driverAvailability + ", cab=" + cab + "]";
 	}
+	
 	
 	
 	

@@ -4,25 +4,26 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.cabbooking.dto.RideDTO;
+import com.cabbooking.entity.Ride;
 
 public interface IRideService {
 	
 
-	public RideDTO addRide(RideDTO ride);
+	public Ride addRide(Ride ride);
 
-	public RideDTO updateRide(RideDTO ride);
+	public Ride updateRide(Ride ride,int rideId);
 
-	public RideDTO cancleRide(Integer rideId);
+	public Ride cancleRide(Integer rideId);
 
-	public List<RideDTO> viewAllRides();
+	public List<Ride> viewAllRides();
 
-	public RideDTO viewRideByCustomerId(Integer customerId);
+	public Ride viewRideByCustomerId(Integer customerId);
 
-	public List<RideDTO> viewRideByDriverId(Integer driverId);
+	public List<Ride> viewRideByDriverId(Integer driverId);
 
-	public List<RideDTO> viewRidesByCabId(Integer cabId);
+	public List<Ride> viewRidesByCabId(Integer cabId);
 	
-	public List<RideDTO> viewRidesByStatus(String status);
+	public List<Ride> viewRidesByStatus(String status);
 	
-	public List<RideDTO> viewRidesByDate(LocalDate date);
+	public List<Ride> viewRidesByDate(LocalDate date);
 }

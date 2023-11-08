@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,13 +30,13 @@ public class TripBooking {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
 	
-	@Nonnull
+	
 	private CabType cabType;
-	@Nonnull
+	
 	private String pickupLocation;
-	@Nonnull
+//	@Nonnull
 	private String dropoffLocation;
-	@Nonnull
+//	@Nonnull
 	private LocalDateTime startDateTime;
 	@Nonnull
 	private BookingStatus bookingStatus;
@@ -46,7 +47,7 @@ public class TripBooking {
 	private Double bill;
 	
 	@JsonIgnore
-	@ManyToOne
+	@OneToOne
 	private Customer customer;
 	
 

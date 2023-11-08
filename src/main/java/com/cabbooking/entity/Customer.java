@@ -6,9 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
 public class Customer extends User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int customerId;
+	
 	private String customerName;
 	
 	public Customer() {}
@@ -16,7 +14,7 @@ public class Customer extends User {
 	public Customer(String customerName,int customerId) {
 		super();
 		this.customerName = customerName;
-		this.customerId = customerId;
+
 	}
 
 	public String getCustomerName() {
@@ -28,17 +26,11 @@ public class Customer extends User {
 	}
 	
 	
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
+	
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName=" + customerName + "]";
+		return "Customer [customerName=" + customerName + "]";
 	}
 
 	
