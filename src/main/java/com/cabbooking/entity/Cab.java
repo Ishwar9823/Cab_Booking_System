@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import com.cabbooking.util.CabType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,8 +33,8 @@ public class Cab {
 	private String registrationNo;
 	private Boolean cabAvailability;
 	private String currentLocation;
-	@JsonIgnore
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Driver driver;
 	
 	public Cab(){}

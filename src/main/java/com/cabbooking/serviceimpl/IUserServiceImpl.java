@@ -17,7 +17,7 @@ public class IUserServiceImpl implements IUserService{
 	UserRepo userRepo;
 	
 	@Override
-	public UserDTO registerUser(UserDTO user) {
+	public UserDTO registerUser(User user) {
 		UserDTO regiUser = new UserDTO();
 		
 		regiUser.setUserId(user.getUserId());
@@ -26,7 +26,8 @@ public class IUserServiceImpl implements IUserService{
 		regiUser.setEmail(user.getEmail());
 		regiUser.setUserName(user.getUserName());
 		
-		return userRepo.save(regiUser);
+		 userRepo.save(user);
+		 return regiUser;
 	}
 
 	@Override
@@ -41,8 +42,9 @@ public class IUserServiceImpl implements IUserService{
 			regiUser.setEmail(user.getEmail());
 			regiUser.setUserName(user.getUserName());
 			
+			userRepo.save(user);
 			
-			return userRepo.save(regiUser);
+			return regiUser;
 		}
 		else {
 			return null;
@@ -54,8 +56,8 @@ public class IUserServiceImpl implements IUserService{
 	public String signOut(int userId) {
 		Optional<User> user = userRepo.findById(userId);
 		if(user.isPresent()) {
-			User userSingOut = user.get();
-			userRepo.delete(userSingOut);
+//			User userSingOut = user.get();
+//			userRepo.delete(userSingOut);
 			return "User Logged Out Successfully";
 		}
 		else {

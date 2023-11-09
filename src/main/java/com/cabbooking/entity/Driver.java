@@ -2,6 +2,7 @@ package com.cabbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,8 +15,7 @@ public class Driver extends User{
 	private String licenseNo;
 	private Boolean driverAvailability;
 	
-	@OneToOne
-	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
 	private Cab cab;
 	
 	public Driver() {

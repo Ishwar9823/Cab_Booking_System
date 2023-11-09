@@ -1,10 +1,11 @@
 package com.cabbooking.service;
 
 import com.cabbooking.dto.UserDTO;
+import com.cabbooking.entity.User;
 
 public interface IUserService {
 
-	UserDTO registerUser(UserDTO user);
+	UserDTO registerUser(User user);
 
 	UserDTO signIn(String userName, String password);
 

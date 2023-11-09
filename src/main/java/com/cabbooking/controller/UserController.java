@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.dto.UserDTO;
+import com.cabbooking.entity.User;
 import com.cabbooking.serviceimpl.IUserServiceImpl;
 
 @RestController
@@ -18,7 +19,7 @@ public class UserController{
 	IUserServiceImpl iUserServiceImpl;
 	
 	@PostMapping("/userregister")
-	public UserDTO registerUser(@RequestBody UserDTO user) {
+	public UserDTO registerUser(@RequestBody User user) {
 		return iUserServiceImpl.registerUser(user);
 	}
 	

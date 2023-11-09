@@ -2,6 +2,7 @@ package com.cabbooking.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class IDriverServiceImpl implements IDriverService{
 
 	@Override
 	public Driver addDriver(Driver driver) {
-		// TODO Auto-generated method stub
+
 		if(driver.getRoles().equals("Driver")) {
 			return driverRepo.save(driver);
 		}
@@ -27,7 +28,7 @@ public class IDriverServiceImpl implements IDriverService{
 
 	@Override
 	public Driver updateDriver(Driver driver, int driverId) {
-		// TODO Auto-generated method stub
+
 		Optional<Driver> driv = driverRepo.findById(driverId);
 		if(driv.isPresent()) {
 			Driver updateDriver = driv.get();
@@ -40,6 +41,7 @@ public class IDriverServiceImpl implements IDriverService{
 			updateDriver.setMobileNumber(driver.getMobileNumber());
 			updateDriver.setEmail(driver.getEmail());
 			updateDriver.setRoles(driver.getRoles());
+			updateDriver.setCab(driver.getCab());
 			
 			return driverRepo.save(updateDriver);
 		}
@@ -52,39 +54,31 @@ public class IDriverServiceImpl implements IDriverService{
 
 	@Override
 	public List<Driver> viewDrivers() {
-		// TODO Auto-generated method stub
+
 		return driverRepo.findAll();
 	}
 
 	@Override
 	public Driver viewDriverById(Integer driverId) {
-		// TODO Auto-generated method stub
-		Optional<Driver> driv = driverRepo.findById(driverId);
-		if(driv.isPresent()) {
-			return driv.get();
+		
+		Optional<Driver> viewById = driverRepo.findAll().stream().filter(e->e.getUserId()==driverId).findAny();
+		if(viewById.isPresent()) {
+			return viewById.get();
 		}
 		else {
 			return null;
 		}
-		
 	}
 
 	@Override
 	public List<Driver> viewDriverByAvailability() {
-		// TODO Auto-generated method stub
-		List<Driver> driv = driverRepo.findAll();
+		
+		List<Driver> driv = driverRepo.findAll().stream().filter(e->e.getDriverAvailability()).collect(Collectors.toList());
 		if(!driv.isEmpty()) {
-			for(Driver driver:driv ) {
-				if(driver.getDriverAvailability()) {
-					driv.add(driver);
-				}
-			}
 			return driv;
 		}
 		else {
 			return null;
 		}
 	}
-	
-	
 }

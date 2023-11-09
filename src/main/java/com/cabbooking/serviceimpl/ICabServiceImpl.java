@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,9 @@ public class ICabServiceImpl implements ICabService{
 	
 	@Override
 	public Cab addCab(Cab cab) {
-//		Optional<Cab> cabfind = cabRepo.findById(cab.getCabId());
 		
-			
 			cabRepo.save(cab);
 			return cab;
-		
-				
-		
 	}
 
 	@Override
@@ -60,7 +56,10 @@ public class ICabServiceImpl implements ICabService{
 			cabRepo.save(updateCab);
 			return updateCab;
 		}
-		return null;
+		else {
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -72,83 +71,49 @@ public class ICabServiceImpl implements ICabService{
 	@Override
 	public List<Cab> viewCabByType(String cabType) {
 		List<Cab> viewCabsOfTyp = new ArrayList<>();
-		List<Cab> allCab = cabRepo.findAll();
-		for(Cab cab:allCab) {
-			String carName = cab.getCabType().toString();
-			if(carName.equals(cabType)){
-			viewCabsOfTyp.add(cab);
-			}
+		viewCabsOfTyp = cabRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)).collect(Collectors.toList());
+		if(!viewCabsOfTyp.isEmpty()) {
+			return viewCabsOfTyp;
 		}
-		return viewCabsOfTyp;
-//		if(!viewCabsOfTyp.isEmpty()) {
-//			return viewCabsOfTyp;
-//		}
-//		else {
-//			return null;
-//		}
+		else {
+			return null;
+		}
+
 	}
 
 	@Override
 	public List<Cab> viewCabByCurrentLocation(String currentLocation) {
 		List<Cab> viewCabsByLoc = new ArrayList<>();
-		List<Cab> allCab = cabRepo.findAll();
-		for(Cab cab:allCab) {
-			if(cab.getCurrentLocation().equals(currentLocation)) {
-				viewCabsByLoc.add(cab);
-			}
+		viewCabsByLoc = cabRepo.findAll().stream().filter(e->e.getCurrentLocation().equals(currentLocation)).collect(Collectors.toList());
+		if(!viewCabsByLoc.isEmpty()) {
+			return viewCabsByLoc;
 		}
-//		if(!viewCabsOfLoc.isEmpty()) {
-//			return viewCabsOfLoc;
-//		}
-//		else {
-//			return null;
-//		}
-		return viewCabsByLoc;
-
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	public Cab viewCabByDriverId(int driverId) {
 		Optional<Cab> check = cabRepo.findById(driverId);
-//		if(check.isPresent()) {
-//			return check.get();
-//		}
-//		else {
-//			return null;
-//		}
 		return check.get();
 	}
 
 	@Override
 	public Cab viewCabById(int cabId) {
 		Optional<Cab> check = cabRepo.findById(cabId);
-//		if(check.isPresent()) {
-//			return check.get();
-//		}
-//		else {
-//			return null;
-//		}
 		return check.get();
 	}
 
 	@Override
 	public List<Cab> viewCabByTypeAndLocation(String cabType, String currentLocation) {
-		List<Cab> viewCabs = new ArrayList<>();
-		List<Cab> allCab = cabRepo.findAll();
-		for(Cab cab : allCab) {
-			String cabName = cab.getCabType().toString();
-			if(cab.getCurrentLocation().equals(currentLocation)&& cabName.equals(cabType)) {
-				viewCabs.add(cab);
-			}
+		List<Cab> viewCabs = cabRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)&&e.getCurrentLocation().equals(currentLocation)).collect(Collectors.toList());
+		if(!viewCabs.isEmpty()) {
+			return viewCabs;
 		}
-//		if(!viewCabs.isEmpty()) {
-//			return viewCabs;
-//		}
-//		else {
-//			return null;
-//		}
-		return viewCabs;
-
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -160,12 +125,6 @@ public class ICabServiceImpl implements ICabService{
 				viewCabByAva.add(cab);
 			}
 		}
-//		if(!viewCabByAva.isEmpty()) {
-//			return viewCabByAva;
-//		}
-//		else {
-//			return null;
-//		}
 		return viewCabByAva;
 	}
 

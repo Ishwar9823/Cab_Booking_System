@@ -85,7 +85,6 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 		else {
 			return null;
 		}
-		
 	}
 
 	@Override
@@ -115,7 +114,7 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 
 	@Override
 	public List<TripBooking> viewBookingByCabType(String cabType) {
-		// TODO Auto-generated method stub
+		//TODO Auto-generated method stub
 		
 		return tripBookingRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)).collect(Collectors.toList());
 	}
@@ -123,16 +122,16 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 	@Override
 	public List<TripBooking> viewBookingsByDatewiseSortingOrder() {
 		// TODO Auto-generated method stub
-		
+		 
 //		
-		return null;
+		return null ;
 //				tripBookingRepo.findAll().stream().filter(e->e.getStartDateTime()!=null).sorted(Comparator.comparing(TripBooking::getStartDateTime)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<TripBooking> viewBookingsByCustomerBasedOnDates(Integer customerId, LocalDate fromDate,
 			LocalDate toDate) {
-		// TODO Auto-generated method stub
+		
 		
 		return null;
 	}

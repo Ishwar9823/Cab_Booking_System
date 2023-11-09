@@ -9,7 +9,7 @@ import com.cabbooking.entity.User;
 @Repository
 public interface UserRepo extends JpaRepository<User,Integer>{
 
-	UserDTO save(UserDTO regiUser);
+//	UserDTO save(UserDTO regiUser);
 	User findByUserName(String name);
 
 	
