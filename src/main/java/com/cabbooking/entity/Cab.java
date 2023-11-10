@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,13 +30,16 @@ public class Cab {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cabId;
+	
+	@Enumerated(EnumType.STRING)
 	private CabType cabType;
+	
 	private Double ratePerKm;
 	private String registrationNo;
 	private Boolean cabAvailability;
 	private String currentLocation;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Driver driver;
 	
 	public Cab(){}

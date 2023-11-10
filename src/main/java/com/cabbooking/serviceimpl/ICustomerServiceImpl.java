@@ -2,11 +2,14 @@ package com.cabbooking.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cabbooking.dto.CustomerDTO;
 import com.cabbooking.entity.Customer;
+import com.cabbooking.exception.CustomerBookingException;
 import com.cabbooking.repository.CustomerRepo;
 import com.cabbooking.service.ICustomerService;
 @Service
@@ -15,50 +18,59 @@ public class ICustomerServiceImpl implements ICustomerService {
 	@Autowired
 	CustomerRepo customerRepo;
 	@Override
-	public Customer registerCustomer(Customer customer) {
+	public CustomerDTO registerCustomer(Customer customer){
 		if(customer.getRoles().equals("Customer")) {
-			return customerRepo.save(customer);
+			customerRepo.save(customer);
+			return toCustomerDTO(customer) ;
 		}
 		return null;
 	}
 
 	@Override
-	public Customer updateCustomer(Customer customer,int customerId) {
+	public CustomerDTO updateCustomer(Customer customer,int customerId) throws CustomerBookingException{
 		Optional<Customer> cust = customerRepo.findById(customerId);
 		if(cust.isPresent()) {
-			Customer updatingCustomer = cust.get();
-			updatingCustomer.setCustomerName(customer.getCustomerName());
-			updatingCustomer.setUserName(customer.getUserName());
-			updatingCustomer.setPassword(customer.getPassword());
-			updatingCustomer.setAddress(customer.getAddress());
-			updatingCustomer.setMobileNumber(customer.getMobileNumber());
-			updatingCustomer.setEmail(customer.getEmail());
-			updatingCustomer.setRoles(customer.getRoles());
-			
-			return customerRepo.save(updatingCustomer);
+			customerRepo.save(customer);
+			return toCustomerDTO(customer) ;
 		}
 		else {
-			return null;
+			throw new CustomerBookingException("Customer not found");
 		}
 		
 	}
 
 	@Override
-	public List<Customer> viewCustomers() {
-		
-		return customerRepo.findAll();
+	public List<CustomerDTO> viewCustomers() throws CustomerBookingException{
+		List<CustomerDTO> custDTO = customerRepo.findAll().stream().map(e->toCustomerDTO(e)).collect(Collectors.toList());
+		if(!custDTO.isEmpty()) {
+			return custDTO;
+		}
+		else {
+			throw new CustomerBookingException("No Customers found");
+		}
 	}
 
 	@Override
-	public Customer viewCustomerById(Integer customerId) {
+	public CustomerDTO viewCustomerById(Integer customerId) throws CustomerBookingException{
 		Optional<Customer> cust = customerRepo.findById(customerId);
 		
 		if(cust.isPresent()) {
-			return cust.get();
+			return toCustomerDTO(cust.get()) ;
 		}
 		else {
-			return null;
+			throw new CustomerBookingException("Customer not found");
 		}
+	}
+	
+	private CustomerDTO toCustomerDTO(Customer customer) {
+		CustomerDTO custDTO = new CustomerDTO();
+		custDTO.setCustomerName(customer.getCustomerName());
+		custDTO.setUserName(customer.getUserName());
+		custDTO.setAddress(customer.getAddress());
+		custDTO.setEmail(customer.getEmail());
+		custDTO.setRoles(customer.getRoles());
+		return custDTO;
+		
 	}
 
 }

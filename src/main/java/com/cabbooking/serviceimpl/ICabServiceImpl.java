@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.cabbooking.dto.CabDTO;
 import com.cabbooking.entity.Cab;
 import com.cabbooking.exception.CabBookingException;
-import com.cabbooking.exception.CabException;
 import com.cabbooking.repository.CabRepo;
 import com.cabbooking.service.ICabService;
 import com.cabbooking.util.CabType;
@@ -26,14 +25,13 @@ public class ICabServiceImpl implements ICabService{
 	CabRepo cabRepo;
 	
 	@Override
-	public Cab addCab(Cab cab) {
-		
+	public Cab addCab(Cab cab) throws CabBookingException {
 			cabRepo.save(cab);
 			return cab;
 	}
 
 	@Override
-	public Cab updateCab(Cab cab,int cabId) {
+	public Cab updateCab(Cab cab,int cabId) throws CabBookingException{
 		Optional<Cab> check = cabRepo.findById(cab.getCabId());
 		Cab updateCab = check.get();
 		if(check.isPresent()) {
@@ -57,67 +55,83 @@ public class ICabServiceImpl implements ICabService{
 			return updateCab;
 		}
 		else {
-			return null;
+			throw new CabBookingException("Cab details not found");
 		}
 		
 	}
 
 	@Override
-	public List<Cab> viewCabs() {
+	public List<Cab> viewCabs() throws CabBookingException{
 		List<Cab> allCab = cabRepo.findAll();
-		return allCab;
+		if(!allCab.isEmpty()) {
+			return allCab;
+		}
+		else {
+			throw new CabBookingException("No Cabs Found");
+		}
 	}
 
 	@Override
-	public List<Cab> viewCabByType(String cabType) {
+	public List<Cab> viewCabByType(String cabType) throws CabBookingException{
 		List<Cab> viewCabsOfTyp = new ArrayList<>();
 		viewCabsOfTyp = cabRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)).collect(Collectors.toList());
 		if(!viewCabsOfTyp.isEmpty()) {
 			return viewCabsOfTyp;
 		}
 		else {
-			return null;
+			throw new CabBookingException(cabType.toString()+"Cab Not Found");
 		}
 
 	}
 
 	@Override
-	public List<Cab> viewCabByCurrentLocation(String currentLocation) {
+	public List<Cab> viewCabByCurrentLocation(String currentLocation) throws CabBookingException{
 		List<Cab> viewCabsByLoc = new ArrayList<>();
 		viewCabsByLoc = cabRepo.findAll().stream().filter(e->e.getCurrentLocation().equals(currentLocation)).collect(Collectors.toList());
 		if(!viewCabsByLoc.isEmpty()) {
 			return viewCabsByLoc;
 		}
 		else {
-			return null;
+			throw new CabBookingException("Cab not found at this location");
 		}
 	}
 
 	@Override
-	public Cab viewCabByDriverId(int driverId) {
+	public Cab viewCabByDriverId(int driverId) throws CabBookingException{
 		Optional<Cab> check = cabRepo.findById(driverId);
-		return check.get();
+		if(check.isPresent()) {
+			return check.get();
+		}
+		else {
+			throw new CabBookingException("Cab not found by driverID");
+		}
+		
 	}
 
 	@Override
-	public Cab viewCabById(int cabId) {
+	public Cab viewCabById(int cabId) throws CabBookingException{
 		Optional<Cab> check = cabRepo.findById(cabId);
-		return check.get();
+		if(check.isPresent()) {
+			return check.get();
+		}
+		else {
+			throw new CabBookingException("Cab not found by CabID");
+		}
 	}
 
 	@Override
-	public List<Cab> viewCabByTypeAndLocation(String cabType, String currentLocation) {
+	public List<Cab> viewCabByTypeAndLocation(String cabType, String currentLocation) throws CabBookingException{
 		List<Cab> viewCabs = cabRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)&&e.getCurrentLocation().equals(currentLocation)).collect(Collectors.toList());
 		if(!viewCabs.isEmpty()) {
 			return viewCabs;
 		}
 		else {
-			return null;
+			throw new CabBookingException(cabType+" Type Cab not found at "+currentLocation);
 		}
 	}
 
 	@Override
-	public List<Cab> viewCabByAvailability() {
+	public List<Cab> viewCabByAvailability() throws CabBookingException{
 		List<Cab> viewCabByAva = new ArrayList<>();
 		List<Cab> allCab = cabRepo.findAll();
 		for(Cab cab : allCab) {
@@ -125,7 +139,12 @@ public class ICabServiceImpl implements ICabService{
 				viewCabByAva.add(cab);
 			}
 		}
-		return viewCabByAva;
+		if(!viewCabByAva.isEmpty()) {
+			return viewCabByAva;
+		}
+		else {
+			throw new CabBookingException("Cab not found by cabID");
+		}
 	}
 
 }

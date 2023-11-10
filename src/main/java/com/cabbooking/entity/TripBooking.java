@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,16 +32,21 @@ public class TripBooking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
+	
+	@Enumerated( EnumType.STRING)
 	private CabType cabType;
+	
 	private String pickupLocation;
 	private String dropoffLocation;
 	private LocalDateTime startDateTime;
+	
+	@Enumerated(EnumType.STRING)
 	private BookingStatus bookingStatus;
 	// Could be generated randomly
 	private Double distanceInKm;
 	private Double bill;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Customer customer;
 	
 

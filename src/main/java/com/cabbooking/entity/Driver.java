@@ -13,20 +13,17 @@ public class Driver extends User{
 	
 	private String driverName;
 	private String licenseNo;
-	private Boolean driverAvailability;
+	private Boolean driverAvailability; 
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Cab cab;
 	
 	public Driver() {
 		
 	}
-	public Driver(String driverName, String licenseNo, Boolean driverAvailability,int driverId,Cab cab ) {
+	public Driver(String driverName, String licenseNo, Boolean driverAvailability,int driverId) {
 		super();
 		this.driverName = driverName;
 		this.licenseNo = licenseNo;
 		this.driverAvailability = driverAvailability;
-		this.cab = cab;
 	}
 	public String getDriverName() {
 		return driverName;
@@ -49,16 +46,11 @@ public class Driver extends User{
 	
 	
 	
-	public Cab getCab() {
-		return cab;
-	}
-	public void setCab(Cab cab) {
-		this.cab = cab;
-	}
+	
 	@Override
 	public String toString() {
 		return "Driver [driverName=" + driverName + ", licenseNo=" + licenseNo
-				+ ", driverAvailability=" + driverAvailability + ", cab=" + cab + "]";
+				+ ", driverAvailability=" + driverAvailability + "]";
 	}
 	
 	

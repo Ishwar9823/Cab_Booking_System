@@ -4,26 +4,26 @@ import java.util.List;
 
 import com.cabbooking.dto.CabDTO;
 import com.cabbooking.entity.Cab;
-import com.cabbooking.exception.CabException;
+import com.cabbooking.exception.CabBookingException;
 
 public interface ICabService {
 	
-	public Cab addCab(Cab cab) ;
+	public Cab addCab(Cab cab) throws CabBookingException ;
 
-	public Cab updateCab(Cab cab,int cabId);
+	public Cab updateCab(Cab cab,int cabId) throws CabBookingException;
 
-	public List<Cab> viewCabs();
+	public List<Cab> viewCabs() throws CabBookingException;
 
-	public List<Cab> viewCabByType(String cabType);
+	public List<Cab> viewCabByType(String cabType) throws CabBookingException;
 
-	public List<Cab> viewCabByCurrentLocation(String currentLocation);
+	public List<Cab> viewCabByCurrentLocation(String currentLocation)throws CabBookingException;
 	
-	public Cab viewCabByDriverId(int driverId);
+	public Cab viewCabByDriverId(int driverId) throws CabBookingException;
 
-	public Cab viewCabById(int cabId);
+	public Cab viewCabById(int cabId) throws CabBookingException;
 
-	public List<Cab> viewCabByTypeAndLocation(String cabType,String currentLocation);
+	public List<Cab> viewCabByTypeAndLocation(String cabType,String currentLocation)throws CabBookingException;
 
-	public List<Cab> viewCabByAvailability();
+	public List<Cab> viewCabByAvailability() throws CabBookingException;
 
 }

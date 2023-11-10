@@ -4,14 +4,15 @@ import java.util.List;
 
 import com.cabbooking.dto.CustomerDTO;
 import com.cabbooking.entity.Customer;
+import com.cabbooking.exception.CustomerBookingException;
 
 public interface ICustomerService {
 
-	public Customer registerCustomer(Customer customer);
+	public CustomerDTO registerCustomer(Customer customer);
 
-	public Customer updateCustomer(Customer customer,int customerId);
+	public CustomerDTO updateCustomer(Customer customer,int customerId) throws CustomerBookingException;
 
-	public List<Customer> viewCustomers();
+	public List<CustomerDTO> viewCustomers() throws CustomerBookingException;
 
-	public Customer viewCustomerById(Integer customerId);
+	public CustomerDTO viewCustomerById(Integer customerId) throws CustomerBookingException;
 }

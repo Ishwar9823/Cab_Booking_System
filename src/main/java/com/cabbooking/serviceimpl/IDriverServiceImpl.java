@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cabbooking.dto.DriverDTO;
 import com.cabbooking.entity.Driver;
+import com.cabbooking.exception.DriverBookingException;
 import com.cabbooking.repository.DriverRepo;
 import com.cabbooking.service.IDriverService;
 
@@ -18,67 +20,79 @@ public class IDriverServiceImpl implements IDriverService{
 	DriverRepo driverRepo;
 
 	@Override
-	public Driver addDriver(Driver driver) {
+	public DriverDTO addDriver(Driver driver) {
 
 		if(driver.getRoles().equals("Driver")) {
-			return driverRepo.save(driver);
+			
+			driverRepo.save(driver);
+			return toDriverDTO(driver);
 		}
 		return null;
 	}
 
 	@Override
-	public Driver updateDriver(Driver driver, int driverId) {
+	public DriverDTO updateDriver(Driver driver, int driverId) throws DriverBookingException{
 
 		Optional<Driver> driv = driverRepo.findById(driverId);
 		if(driv.isPresent()) {
-			Driver updateDriver = driv.get();
-			updateDriver.setDriverName(driver.getDriverName());
-			updateDriver.setLicenseNo(driver.getLicenseNo());
-			updateDriver.setDriverAvailability(driver.getDriverAvailability());
-			updateDriver.setUserName(driver.getUserName());
-			updateDriver.setPassword(driver.getPassword());
-			updateDriver.setAddress(driver.getAddress());
-			updateDriver.setMobileNumber(driver.getMobileNumber());
-			updateDriver.setEmail(driver.getEmail());
-			updateDriver.setRoles(driver.getRoles());
-			updateDriver.setCab(driver.getCab());
-			
-			return driverRepo.save(updateDriver);
+			driverRepo.save(driver);
+			return toDriverDTO(driver);
 		}
 		else {
-			return null;
+			throw new DriverBookingException("Driver not found");
 		}
 		
 		
 	}
 
 	@Override
-	public List<Driver> viewDrivers() {
+	public List<DriverDTO> viewDrivers() throws DriverBookingException{
 
-		return driverRepo.findAll();
+		List<DriverDTO> cust =   driverRepo.findAll().stream().map(e->toDriverDTO(e)).collect(Collectors.toList());
+		
+		if(!cust.isEmpty()) {
+			return cust;
+		}
+		else {
+			throw new DriverBookingException("Drivers not found");
+		}
 	}
 
 	@Override
-	public Driver viewDriverById(Integer driverId) {
+	public DriverDTO viewDriverById(Integer driverId) throws DriverBookingException{
 		
 		Optional<Driver> viewById = driverRepo.findAll().stream().filter(e->e.getUserId()==driverId).findAny();
 		if(viewById.isPresent()) {
-			return viewById.get();
+			driverRepo.save(viewById.get());
+			return toDriverDTO(viewById.get());
 		}
 		else {
-			return null;
+			throw new DriverBookingException("Driver not found by driverID");
 		}
 	}
 
 	@Override
-	public List<Driver> viewDriverByAvailability() {
+	public List<DriverDTO> viewDriverByAvailability() throws DriverBookingException{
 		
-		List<Driver> driv = driverRepo.findAll().stream().filter(e->e.getDriverAvailability()).collect(Collectors.toList());
+		List<DriverDTO> driv = driverRepo.findAll().stream().filter(e->e.getDriverAvailability()).map(e->toDriverDTO(e)).collect(Collectors.toList());
 		if(!driv.isEmpty()) {
 			return driv;
 		}
 		else {
-			return null;
+			throw new DriverBookingException("Drivers not available at the moment");
 		}
+	}
+	private DriverDTO toDriverDTO(Driver driver) {
+		
+		DriverDTO updateDriver = new DriverDTO();
+		updateDriver.setDriverName(driver.getDriverName());
+		updateDriver.setLicenseNo(driver.getLicenseNo());
+		updateDriver.setDriverAvailability(driver.getDriverAvailability());
+		updateDriver.setUserName(driver.getUserName());
+		updateDriver.setAddress(driver.getAddress());
+		updateDriver.setEmail(driver.getEmail());
+		updateDriver.setRoles(driver.getRoles());
+		
+		return updateDriver;
 	}
 }

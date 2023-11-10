@@ -5,6 +5,8 @@ import com.cabbooking.util.RideStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,13 +34,16 @@ public class Ride {
 	private String dropoffLocation;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
+	
+	@Enumerated(EnumType.STRING)
 	private RideStatus rideStatus;
 	
-	@JsonIgnore
+	
+
 	@OneToOne
 	private Cab cab;
 	
-	@JsonIgnore
+
 	@OneToOne
 	private Customer customer;
 	

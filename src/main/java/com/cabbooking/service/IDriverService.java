@@ -4,16 +4,18 @@ import java.util.List;
 
 import com.cabbooking.dto.DriverDTO;
 import com.cabbooking.entity.Driver;
+import com.cabbooking.exception.DriverBookingException;
 
 public interface IDriverService {
 
-	public Driver addDriver(Driver driver);
+	public DriverDTO addDriver(Driver driver) ;
 
-	public Driver updateDriver(Driver driver,int driverId);
+	public DriverDTO updateDriver(Driver driver,int driverId) throws DriverBookingException;
 
-	public List<Driver> viewDrivers();
+	public List<DriverDTO> viewDrivers() throws DriverBookingException;
 
-	public Driver viewDriverById(Integer driverId);
+	public DriverDTO viewDriverById(Integer driverId) throws DriverBookingException;
 
-	public List<Driver> viewDriverByAvailability();
+	public List<DriverDTO> viewDriverByAvailability( ) throws DriverBookingException;
+	
 }

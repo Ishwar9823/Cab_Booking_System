@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cabbooking.dto.CustomerDTO;
 import com.cabbooking.entity.Customer;
+import com.cabbooking.exception.CustomerBookingException;
 import com.cabbooking.service.ICustomerService;
 import com.cabbooking.serviceimpl.ICustomerServiceImpl;
 
@@ -22,22 +24,22 @@ public class CustomerController  {
 	ICustomerServiceImpl iCustomerServiceimpl;
 	
 	@PostMapping("/customerregister")
-	public Customer registerCustomer(@RequestBody Customer customer) {
+	public CustomerDTO registerCustomer(@RequestBody Customer customer) {
 		return iCustomerServiceimpl.registerCustomer(customer);
 	}
 	
 	@PutMapping("/customerupdate/{custId}")
-	public Customer updateCustomer(@RequestBody Customer customer, @PathVariable("custId") int customerId) {
+	public CustomerDTO updateCustomer(@RequestBody Customer customer, @PathVariable("custId") int customerId) throws CustomerBookingException{
 		return iCustomerServiceimpl.updateCustomer(customer,customerId);
 	}
 	
 	@GetMapping("/viewlist")
-	public List<Customer> viewCustomers(){
+	public List<CustomerDTO> viewCustomers() throws CustomerBookingException{
 		return iCustomerServiceimpl.viewCustomers();
 	}
 	
 	@GetMapping("/viewbyid/{custId}")
-	public Customer viewCustomerById(@PathVariable("custId") Integer customerId ) {
+	public CustomerDTO viewCustomerById(@PathVariable("custId") Integer customerId ) throws CustomerBookingException{
 		return iCustomerServiceimpl.viewCustomerById(customerId);
 	}
 	

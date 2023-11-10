@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.dto.UserDTO;
 import com.cabbooking.entity.User;
+import com.cabbooking.exception.UserBookingException;
 import com.cabbooking.serviceimpl.IUserServiceImpl;
 
 @RestController
@@ -19,17 +20,17 @@ public class UserController{
 	IUserServiceImpl iUserServiceImpl;
 	
 	@PostMapping("/userregister")
-	public UserDTO registerUser(@RequestBody User user) {
+	public UserDTO registerUser(@RequestBody User user){
 		return iUserServiceImpl.registerUser(user);
 	}
 	
 	@PutMapping("/usersingin/{userName}/{password}")
-	public UserDTO signIn(@PathVariable("userName") String userName,@PathVariable("password") String password) {
+	public UserDTO signIn(@PathVariable("userName") String userName,@PathVariable("password") String password) throws UserBookingException{
 		return iUserServiceImpl.signIn(userName, password);
 	}
 	
 	@GetMapping("/usersingout/{UserId}")
-	public String signOut(@PathVariable("userId") int userId) {
+	public String signOut(@PathVariable("userId") int userId) throws UserBookingException{
 		return iUserServiceImpl.signOut(userId);
 	}
 }

@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-@Table(name="Cab_User")
+@Table(name="Users")
 public class User {
 	@Id
 	private int userId;

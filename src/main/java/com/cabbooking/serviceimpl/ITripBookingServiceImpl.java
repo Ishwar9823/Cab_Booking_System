@@ -2,6 +2,8 @@ package com.cabbooking.serviceimpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.cabbooking.entity.TripBooking;
+import com.cabbooking.exception.TripBookingException;
 import com.cabbooking.repository.TripBookingRepo;
 import com.cabbooking.service.ITripBookingService;
 
@@ -33,7 +36,7 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 	}
 
 	@Override
-	public TripBooking updateTripBooking(TripBooking tripBooking) {
+	public TripBooking updateTripBooking(TripBooking tripBooking) throws TripBookingException{
 		int id = tripBooking.getTripBookingId();
 		Optional<TripBooking> check = tripBookingRepo.findById(id);
 		if(check.isPresent()) {
@@ -51,13 +54,13 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 			
 		}
 		else {
-			return null;
+			throw new TripBookingException("Trip not found");
 		}
 		
 	}
 
 	@Override
-	public TripBooking cancleTripBooking(Integer tripBookingId) {
+	public TripBooking cancleTripBooking(Integer tripBookingId) throws TripBookingException{
 		// TODO Auto-generated method stub
 		Optional<TripBooking> check = tripBookingRepo.findById(tripBookingId);
 		if(check.isPresent()) {
@@ -66,13 +69,13 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 			return deleteTripBooking;
 		}
 		else {
-			return null;
+			throw new TripBookingException("Trip not found");
 		}
 		
 	}
 
 	@Override
-	public List<TripBooking> viewAllBookings() {
+	public List<TripBooking> viewAllBookings() throws TripBookingException{
 		// TODO Auto-generated method stub
 		List<TripBooking> check = tripBookingRepo.findAll();
 		List<TripBooking> viewList = new ArrayList<>();
@@ -83,57 +86,88 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 			return viewList;
 		}
 		else {
-			return null;
+			throw new TripBookingException("Trips not found");
 		}
 	}
 
 	@Override
-	public TripBooking viewBookingByBookingId(Integer tripBookingId) {
+	public TripBooking viewBookingByBookingId(Integer tripBookingId) throws TripBookingException{
 		
 		Optional<TripBooking> check = tripBookingRepo.findById(tripBookingId);
 		if(check.isPresent()) {
 			return check.get();
 		}
 		else {
-			return null;
+			throw new TripBookingException("Trips not found by bookingId");
 		}
 		
 	}
 
 	@Override
-	public List<TripBooking> viewBookingByCustomerId(Integer customerId) {
+	public List<TripBooking> viewBookingByCustomerId(Integer customerId) throws TripBookingException{
 		
-		return  tripBookingRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId).collect(Collectors.toList());
+		List<TripBooking> list = tripBookingRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId).collect(Collectors.toList());
+		if(!list.isEmpty()) {
+			return list;
+		}else {
+			throw new TripBookingException("Trips not found by customerId");
+		}
 	}
 
 	@Override
-	public List<TripBooking> viewBookingByBookingStatus(String status) {
+	public List<TripBooking> viewBookingByBookingStatus(String status) throws TripBookingException{
 		
-		return  tripBookingRepo.findAll().stream().filter(e->e.getBookingStatus().toString().equals(status)).collect(Collectors.toList());
+		List<TripBooking> list = tripBookingRepo.findAll().stream().filter(e->e.getBookingStatus().toString().equals(status)).collect(Collectors.toList());
+		if(!list.isEmpty()) {
+			return list;
+		}else {
+			throw new TripBookingException("Trips not found by bookingStatus");
+		}
 	}
 
 	@Override
-	public List<TripBooking> viewBookingByCabType(String cabType) {
+	public List<TripBooking> viewBookingByCabType(String cabType) throws TripBookingException{
 		//TODO Auto-generated method stub
 		
-		return tripBookingRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)).collect(Collectors.toList());
+		List<TripBooking> list = tripBookingRepo.findAll().stream().filter(e->e.getCabType().toString().equals(cabType)).collect(Collectors.toList());
+		if(!list.isEmpty()) {
+			return list;
+		}else {
+			throw new TripBookingException("Trips not found by cabType "+cabType);
+		}
 	}
 
 	@Override
-	public List<TripBooking> viewBookingsByDatewiseSortingOrder() {
-		// TODO Auto-generated method stub
-		 
+	public List<TripBooking> viewBookingsByDatewiseSortingOrder() throws TripBookingException{
+
+		List<TripBooking> list = tripBookingRepo.findAll()
+	    .stream()
+	    .filter(e -> e.getStartDateTime() != null)
+	    .sorted(Comparator.comparing(TripBooking::getStartDateTime))
+	    .collect(Collectors.toList());
+		if(!list.isEmpty()) {
+			return list;
+		}
+		else {
+			throw new TripBookingException("Trips not found by Datewise");
+		}
+
 //		
-		return null ;
-//				tripBookingRepo.findAll().stream().filter(e->e.getStartDateTime()!=null).sorted(Comparator.comparing(TripBooking::getStartDateTime)).collect(Collectors.toList());
+		
 	}
 
 	@Override
 	public List<TripBooking> viewBookingsByCustomerBasedOnDates(Integer customerId, LocalDate fromDate,
-			LocalDate toDate) {
+			LocalDate toDate) throws TripBookingException{
 		
 		
-		return null;
+		List<TripBooking> list = tripBookingRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId&&e.getStartDateTime().toLocalDate().equals(toDate)).toList();
+		if(!list.isEmpty()) {
+			return list;
+		}
+		else {
+			throw new TripBookingException("Trips not found by Customer");
+		}
 	}
 
 	

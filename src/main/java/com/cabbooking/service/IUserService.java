@@ -2,13 +2,14 @@ package com.cabbooking.service;
 
 import com.cabbooking.dto.UserDTO;
 import com.cabbooking.entity.User;
+import com.cabbooking.exception.UserBookingException;
 
 public interface IUserService {
 
 	UserDTO registerUser(User user);
 
-	UserDTO signIn(String userName, String password);
+	UserDTO signIn(String userName, String password) throws UserBookingException;
 
 	// use session management accordingly
-	public String signOut(int userId);
+	String signOut(int userId) throws UserBookingException;
 }
