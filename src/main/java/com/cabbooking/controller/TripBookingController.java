@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.entity.TripBooking;
@@ -17,18 +18,20 @@ import com.cabbooking.serviceimpl.ITripBookingServiceImpl;
 
 
 @RestController
+@RequestMapping("tripbooking")
 public class TripBookingController {
 	
 	@Autowired
 	ITripBookingServiceImpl iTripBookingServiceImpl;
 	
-	@PostMapping("/tripbookdata")
+	@PostMapping("/adddata")
 	public TripBooking addTripBooking(@RequestBody TripBooking tripBooking) {
 		return iTripBookingServiceImpl.addTripBooking(tripBooking);
 	}
 	
-	@PutMapping("/updatetrip")
+	@PutMapping("/update")
 	public TripBooking updateTripBooking(@RequestBody TripBooking tripBooking) throws TripBookingException{
+		
 		return iTripBookingServiceImpl.updateTripBooking(tripBooking);
 	}
 	
@@ -47,12 +50,12 @@ public class TripBookingController {
 		return iTripBookingServiceImpl.viewBookingByBookingId(tripBookingId);
 	}
 	
-	@GetMapping("/viewbookinglistbycustid/{customerId}")
+	@GetMapping("/viewlistbycustid/{customerId}")
 	public List<TripBooking> viewBookingByCustomerId(@PathVariable("customerId") int customerId) throws TripBookingException{
 		return iTripBookingServiceImpl.viewBookingByCustomerId(customerId);
 	}
 	
-	@GetMapping("/viewlistbookingbystatus/{status}")
+	@GetMapping("/viewlistbystatus/{status}")
 	public List<TripBooking> viewBookingByBookingStatus(@PathVariable("status") String status) throws TripBookingException{
 		return iTripBookingServiceImpl.viewBookingByBookingStatus(status);
 	}

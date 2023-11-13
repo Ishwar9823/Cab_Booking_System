@@ -15,6 +15,7 @@ import com.cabbooking.entity.TripBooking;
 import com.cabbooking.exception.TripBookingException;
 import com.cabbooking.repository.TripBookingRepo;
 import com.cabbooking.service.ITripBookingService;
+import com.cabbooking.util.BookingStatus;
 
 @Service
 public class ITripBookingServiceImpl implements ITripBookingService {
@@ -24,17 +25,9 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 
 	@Override
 	public TripBooking addTripBooking(TripBooking tripBooking) {
-		// TODO Auto-generated method stub
-		int id = tripBooking.getTripBookingId();
-		Optional<TripBooking> check = tripBookingRepo.findById(id);
-		if(check.isPresent()) {
-			return tripBookingRepo.save(check.get());
+		
+			return tripBookingRepo.save(tripBooking);
 		}
-		else {
-			return null;
-		}
-	}
-
 	@Override
 	public TripBooking updateTripBooking(TripBooking tripBooking) throws TripBookingException{
 		int id = tripBooking.getTripBookingId();
@@ -65,7 +58,7 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 		Optional<TripBooking> check = tripBookingRepo.findById(tripBookingId);
 		if(check.isPresent()) {
 			TripBooking deleteTripBooking = check.get();
-			tripBookingRepo.delete(deleteTripBooking);
+			deleteTripBooking.setBookingStatus(BookingStatus.valueOf("CANCELED"));
 			return deleteTripBooking;
 		}
 		else {

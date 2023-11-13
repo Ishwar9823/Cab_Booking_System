@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.dto.DriverDTO;
@@ -16,25 +17,26 @@ import com.cabbooking.exception.DriverBookingException;
 import com.cabbooking.service.ICustomerService;
 import com.cabbooking.serviceimpl.IDriverServiceImpl;
 
-import jakarta.persistence.Id;
+
 
 @RestController
+@RequestMapping("driver")
 public class DriverController {
 	
 	@Autowired
 	IDriverServiceImpl iDriverServiceImpl;
 	
-	@PostMapping("/driverregister")
-	public DriverDTO addDriver(@RequestBody Driver driver) {
+	@PostMapping("/register")
+	public DriverDTO addDriver(@RequestBody Driver driver) throws DriverBookingException{
 		return iDriverServiceImpl.addDriver(driver);
 	}
 	
-	@PutMapping("/updatedriver/{driverId}")
+	@PutMapping("/update/{driverId}")
 	public DriverDTO updateDriver(@RequestBody Driver driver,@PathVariable("driverId") int driverId) throws DriverBookingException{
 		return iDriverServiceImpl.updateDriver(driver, driverId);
 	}
 	
-	@GetMapping("/viewdriverlist")
+	@GetMapping("/viewdlist")
 	List<DriverDTO> viewDrivers() throws DriverBookingException{
 		return iDriverServiceImpl.viewDrivers();
 	}

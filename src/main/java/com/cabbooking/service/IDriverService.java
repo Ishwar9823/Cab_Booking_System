@@ -8,7 +8,7 @@ import com.cabbooking.exception.DriverBookingException;
 
 public interface IDriverService {
 
-	public DriverDTO addDriver(Driver driver) ;
+	public DriverDTO addDriver(Driver driver) throws DriverBookingException;
 
 	public DriverDTO updateDriver(Driver driver,int driverId) throws DriverBookingException;
 

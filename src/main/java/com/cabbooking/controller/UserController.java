@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.dto.UserDTO;
@@ -14,12 +15,13 @@ import com.cabbooking.exception.UserBookingException;
 import com.cabbooking.serviceimpl.IUserServiceImpl;
 
 @RestController
+@RequestMapping("user")
 public class UserController{
 
 	@Autowired
 	IUserServiceImpl iUserServiceImpl;
 	
-	@PostMapping("/userregister")
+	@PostMapping("/register")
 	public UserDTO registerUser(@RequestBody User user){
 		return iUserServiceImpl.registerUser(user);
 	}

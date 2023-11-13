@@ -1,45 +1,33 @@
 package com.cabbooking.entity;
 
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.cabbooking.util.CabType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-//@Data
 
 
 @Entity
 public class Cab {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy =GenerationType.AUTO )
 	private Integer cabId;
-	
 	@Enumerated(EnumType.STRING)
 	private CabType cabType;
-	
 	private Double ratePerKm;
 	private String registrationNo;
 	private Boolean cabAvailability;
 	private String currentLocation;
 
-	@OneToOne
+	@OneToOne 
 	private Driver driver;
 	
 	public Cab(){}

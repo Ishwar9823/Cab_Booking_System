@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.cabbooking.util.BookingStatus;
 import com.cabbooking.util.CabType;
 
-import jakarta.persistence.Entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

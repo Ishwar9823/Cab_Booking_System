@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabbooking.dto.CustomerDTO;
@@ -18,17 +19,18 @@ import com.cabbooking.serviceimpl.ICustomerServiceImpl;
 
 
 @RestController
+@RequestMapping("customer")
 public class CustomerController  {
 	
 	@Autowired
 	ICustomerServiceImpl iCustomerServiceimpl;
 	
-	@PostMapping("/customerregister")
+	@PostMapping("/register")
 	public CustomerDTO registerCustomer(@RequestBody Customer customer) {
 		return iCustomerServiceimpl.registerCustomer(customer);
 	}
 	
-	@PutMapping("/customerupdate/{custId}")
+	@PutMapping("/update/{custId}")
 	public CustomerDTO updateCustomer(@RequestBody Customer customer, @PathVariable("custId") int customerId) throws CustomerBookingException{
 		return iCustomerServiceimpl.updateCustomer(customer,customerId);
 	}

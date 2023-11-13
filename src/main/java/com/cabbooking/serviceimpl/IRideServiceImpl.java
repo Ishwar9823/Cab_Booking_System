@@ -14,6 +14,7 @@ import com.cabbooking.exception.RideBookingException;
 import com.cabbooking.repository.CustomerRepo;
 import com.cabbooking.repository.RideRepo;
 import com.cabbooking.service.IRideService;
+import com.cabbooking.util.RideStatus;
 
 @Service
 public class IRideServiceImpl implements IRideService {
@@ -49,14 +50,15 @@ public class IRideServiceImpl implements IRideService {
 
 	@Override
 	public Ride cancleRide(Integer rideId) throws RideBookingException{
-		Optional<Ride> checkRide = rideRepo.findById(rideId);
-		if(checkRide.isPresent()) {
-			Ride cancleRide = checkRide.get();
-			rideRepo.delete(cancleRide);
-			return cancleRide;
+		Ride ride = rideRepo.findById(rideId).get();
+		if(ride!=null&&ride.getRideStatus().toString().equals("SCHEDULED")) {
+			Ride ride1 = ride;
+			ride1.setRideStatus(RideStatus.valueOf("CANCELED"));
+			rideRepo.save(ride);
+			return  ride;
 		}
 		else {
-			throw new RideBookingException("Ride not found");
+			throw new RideBookingException("Ongoing Ride not Cancle");
 		}
 		
 	}
@@ -77,7 +79,7 @@ public class IRideServiceImpl implements IRideService {
 	@Override
 	public Ride viewRideByCustomerId(Integer customerId) throws RideBookingException{
 //		Optional<Ride> viewRide = 
-		Optional<Ride> check = rideRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId).findAny();
+		Optional<Ride>check = rideRepo.findById(customerId);
 		if(check.isPresent()) {
 			return check.get();
 		}
@@ -90,9 +92,9 @@ public class IRideServiceImpl implements IRideService {
 	}
 
 	@Override
-	public List<Ride> viewRideByDriverId(Integer driverId) throws RideBookingException{
-		List<Ride> viewById = rideRepo.findAll().stream().filter(e->e.getRideId()==driverId).collect(Collectors.toList());
-		if(!viewById.isEmpty()) {
+	public Ride viewRideByDriverId(Integer driverId) throws RideBookingException{
+		Ride viewById = rideRepo.findAll().stream().filter(e->e.getDriver().getUserId()==driverId).collect(Collectors.toList()).get(0);
+		if(viewById!=null) {
 			return viewById;
 		}
 		else {
@@ -101,11 +103,11 @@ public class IRideServiceImpl implements IRideService {
 	}
 
 	@Override
-	public List<Ride> viewRidesByCabId(Integer cabId) throws RideBookingException{
+	public Ride viewRidesByCabId(Integer cabId) throws RideBookingException{
 		
 		List<Ride> listBycabID = rideRepo.findAll().stream().filter(e->e.getCab().getCabId()==cabId).collect(Collectors.toList());
 		if(!listBycabID.isEmpty()) {
-			return listBycabID;
+			return listBycabID.get(0);
 		}
 		else {
 			throw new RideBookingException("rides not found by cabId");

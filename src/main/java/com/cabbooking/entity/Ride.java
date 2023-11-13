@@ -1,18 +1,19 @@
 package com.cabbooking.entity;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import com.cabbooking.util.RideStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,12 +48,15 @@ public class Ride {
 	@OneToOne
 	private Customer customer;
 	
+	@OneToOne
+	private Driver driver;
+	
 	public Ride() {
 		
 	}
 
 	public Ride(Integer rideId, String pickupLocation, String dropoffLocation, LocalDateTime startTime,
-			LocalDateTime endTime, RideStatus rideStatus, Cab cab, Customer customer) {
+			LocalDateTime endTime, RideStatus rideStatus, Cab cab, Customer customer,Driver driver) {
 		super();
 		this.rideId = rideId;
 		this.pickupLocation = pickupLocation;
@@ -62,6 +66,7 @@ public class Ride {
 		this.rideStatus = rideStatus;
 		this.cab = cab;
 		this.customer = customer;
+		this.driver = driver;
 	}
 
 	public Integer getRideId() {
@@ -128,14 +133,13 @@ public class Ride {
 		this.customer = customer;
 	}
 
-	@Override
-	public String toString() {
-		return "Ride [rideId=" + rideId + ", pickupLocation=" + pickupLocation + ", dropoffLocation=" + dropoffLocation
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", rideStatus=" + rideStatus + ", cab=" + cab
-				+ ", customer=" + customer + "]";
+	public Driver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
 	}
 	
-	
-
 
 }

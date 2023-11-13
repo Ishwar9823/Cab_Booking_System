@@ -3,7 +3,6 @@ package com.cabbooking.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.cabbooking.dto.RideDTO;
 import com.cabbooking.entity.Ride;
 import com.cabbooking.exception.RideBookingException;
 
@@ -20,9 +19,9 @@ public interface IRideService {
 
 	public Ride viewRideByCustomerId(Integer customerId) throws RideBookingException;
 
-	public List<Ride> viewRideByDriverId(Integer driverId) throws RideBookingException;
+	public Ride viewRideByDriverId(Integer driverId) throws RideBookingException;
 
-	public List<Ride> viewRidesByCabId(Integer cabId) throws RideBookingException;
+	public Ride viewRidesByCabId(Integer cabId) throws RideBookingException;
 	
 	public List<Ride> viewRidesByStatus(String status) throws RideBookingException;
 	

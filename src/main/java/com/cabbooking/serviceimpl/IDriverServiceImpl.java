@@ -20,14 +20,16 @@ public class IDriverServiceImpl implements IDriverService{
 	DriverRepo driverRepo;
 
 	@Override
-	public DriverDTO addDriver(Driver driver) {
+	public DriverDTO addDriver(Driver driver) throws DriverBookingException{
 
 		if(driver.getRoles().equals("Driver")) {
 			
 			driverRepo.save(driver);
 			return toDriverDTO(driver);
 		}
-		return null;
+		else {
+			throw new DriverBookingException("Please Enter Valid Role");
+		}
 	}
 
 	@Override
@@ -61,10 +63,9 @@ public class IDriverServiceImpl implements IDriverService{
 	@Override
 	public DriverDTO viewDriverById(Integer driverId) throws DriverBookingException{
 		
-		Optional<Driver> viewById = driverRepo.findAll().stream().filter(e->e.getUserId()==driverId).findAny();
-		if(viewById.isPresent()) {
-			driverRepo.save(viewById.get());
-			return toDriverDTO(viewById.get());
+		Optional<Driver> driv = driverRepo.findById(driverId);
+		if(driv.isPresent()) {
+			return toDriverDTO(driv.get());
 		}
 		else {
 			throw new DriverBookingException("Driver not found by driverID");
