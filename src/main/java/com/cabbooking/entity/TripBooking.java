@@ -9,41 +9,39 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.cabbooking.util.BookingStatus;
 import com.cabbooking.util.CabType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Getter
-//@Setter
+
 
 public class TripBooking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
 	
+	@NotNull(message = "Cab type cannot be null")
 	@Enumerated( EnumType.STRING)
 	private CabType cabType;
-	
+	@NotBlank(message = "Pickup location cannot be blank")
 	private String pickupLocation;
+	@NotBlank(message = "Drop-off location cannot be blank")
 	private String dropoffLocation;
+	@NotNull(message = "Start date and time cannot be null")
 	private LocalDateTime startDateTime;
-	
+	@NotNull(message = "Booking status cannot be null")
 	@Enumerated(EnumType.STRING)
 	private BookingStatus bookingStatus;
 	// Could be generated randomly
+	@NotNull(message = "Distance in kilometers cannot be null")
 	private Double distanceInKm;
+	@NotNull(message = "Bill cannot be null")
 	private Double bill;
+	
 	
 	@OneToOne
 	private Customer customer;

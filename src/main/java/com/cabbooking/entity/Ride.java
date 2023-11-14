@@ -9,42 +9,36 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.cabbooking.util.RideStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Getter
-@Setter
 
 @Entity
 public class Ride {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer rideId;
+	@NotBlank(message = "Pickup location cannot be blank")
 	private String pickupLocation;
+	@NotBlank(message = "Drop-off location cannot be blank")
 	private String dropoffLocation;
+	@NotNull(message = "Start time cannot be null")
 	private LocalDateTime startTime;
+	@NotNull(message = "End time cannot be null")
 	private LocalDateTime endTime;
 	
+	@NotNull(message = "Ride status cannot be null")
 	@Enumerated(EnumType.STRING)
 	private RideStatus rideStatus;
 	
 	
-
+	
 	@OneToOne
 	private Cab cab;
 	
-
 	@OneToOne
 	private Customer customer;
 	

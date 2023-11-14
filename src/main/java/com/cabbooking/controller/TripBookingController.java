@@ -3,6 +3,8 @@ package com.cabbooking.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +27,12 @@ public class TripBookingController {
 	ITripBookingServiceImpl iTripBookingServiceImpl;
 	
 	@PostMapping("/adddata")
-	public TripBooking addTripBooking(@RequestBody TripBooking tripBooking) {
+	public TripBooking addTripBooking(@Valid @RequestBody TripBooking tripBooking) {
 		return iTripBookingServiceImpl.addTripBooking(tripBooking);
 	}
 	
 	@PutMapping("/update")
-	public TripBooking updateTripBooking(@RequestBody TripBooking tripBooking) throws TripBookingException{
+	public TripBooking updateTripBooking(@Valid @RequestBody TripBooking tripBooking) throws TripBookingException{
 		
 		return iTripBookingServiceImpl.updateTripBooking(tripBooking);
 	}

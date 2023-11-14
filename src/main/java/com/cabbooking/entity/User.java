@@ -7,20 +7,29 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name="Users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
+	
+	@NotBlank(message = "Username cannot be blank")
 	private String userName;
+	@NotBlank(message = "Password cannot be blank")
 	private String password;
+	@NotBlank(message = "Address cannot be blank")
 	private String address;
+	@NotBlank(message = "Mobile Number cannot be blank")
 	private String mobileNumber;
+	@Email(message = "Invalid email format")
 	private String email;
 	//Admin, Customer, Driver
+	@NotBlank(message = "Address cannot be blank")
 	private String roles;
 	
 	public User() {

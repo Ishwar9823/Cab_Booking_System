@@ -1,12 +1,15 @@
 package com.cabbooking;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CabBookingSystemApplication {
-
+public class SpringBootBasicAuthenticationApplication {
+	
+	
 	public static void main(String[] args) {
-		SpringApplication.run(CabBookingSystemApplication.class, args);
+		SpringApplication.run(SpringBootBasicAuthenticationApplication.class, args);
 	}
-
+	
+	
 }

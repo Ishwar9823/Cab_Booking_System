@@ -2,6 +2,8 @@ package com.cabbooking.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +29,12 @@ public class DriverController {
 	IDriverServiceImpl iDriverServiceImpl;
 	
 	@PostMapping("/register")
-	public DriverDTO addDriver(@RequestBody Driver driver) throws DriverBookingException{
+	public DriverDTO addDriver(@Valid @RequestBody Driver driver) throws DriverBookingException{
 		return iDriverServiceImpl.addDriver(driver);
 	}
 	
 	@PutMapping("/update/{driverId}")
-	public DriverDTO updateDriver(@RequestBody Driver driver,@PathVariable("driverId") int driverId) throws DriverBookingException{
+	public DriverDTO updateDriver(@Valid @RequestBody Driver driver,@PathVariable("driverId") int driverId) throws DriverBookingException{
 		return iDriverServiceImpl.updateDriver(driver, driverId);
 	}
 	

@@ -8,7 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.cabbooking.util.CabType;
 
 
@@ -20,11 +21,16 @@ public class Cab {
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO )
 	private Integer cabId;
+	@NotNull(message = "Cab type cannot be null")
 	@Enumerated(EnumType.STRING)
 	private CabType cabType;
+	@NotNull(message = "Rate per kilometer cannot be null")
 	private Double ratePerKm;
+	@NotNull(message = "Registration number cannot be blank")
 	private String registrationNo;
+	@NotNull(message = "Cab availability cannot be null")
 	private Boolean cabAvailability;
+	 @NotBlank(message = "Current location cannot be blank")
 	private String currentLocation;
 
 	@OneToOne 

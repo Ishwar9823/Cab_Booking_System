@@ -79,9 +79,9 @@ public class IRideServiceImpl implements IRideService {
 	@Override
 	public Ride viewRideByCustomerId(Integer customerId) throws RideBookingException{
 //		Optional<Ride> viewRide = 
-		Optional<Ride>check = rideRepo.findById(customerId);
-		if(check.isPresent()) {
-			return check.get();
+		List<Ride> check = rideRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId).collect(Collectors.toList());
+		if(!check.isEmpty()) {
+			return check.get(0);
 		}
 		else {
 			throw new RideBookingException("Ride not found By customerId");

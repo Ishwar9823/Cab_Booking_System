@@ -32,25 +32,15 @@ public class ICabServiceImpl implements ICabService{
 
 	@Override
 	public Cab updateCab(Cab cab,int cabId) throws CabBookingException{
-		Optional<Cab> check = cabRepo.findById(cab.getCabId());
-		Cab updateCab = check.get();
-		if(check.isPresent()) {
-			if(Objects.nonNull(cab.getCabType()))
-		     {
-				updateCab.setCabType(cab.getCabType());
-			}
-			if(Objects.nonNull(cab.getRatePerKm())) {
-				updateCab.setRatePerKm(cab.getRatePerKm());
-			}
-			if(Objects.nonNull(cab.getRegistrationNo())) {
-				updateCab.setRegistrationNo(cab.getRegistrationNo());
-			}
-			if(Objects.nonNull(cab.getCabAvailability())) {
-				updateCab.setCabAvailability(cab.getCabAvailability());
-			}
-			if(Objects.nonNull(cab.getCurrentLocation())) {
-				updateCab.setCurrentLocation(cab.getCurrentLocation());
-			}
+		Cab updateCab= cabRepo.findById(cab.getCabId()).get();
+		
+		if(updateCab!=null) {
+			updateCab.setCabAvailability(cab.getCabAvailability());
+			updateCab.setCurrentLocation(cab.getCurrentLocation());
+			updateCab.setCabType(cab.getCabType());
+			updateCab.setRatePerKm(cab.getRatePerKm());
+			updateCab.setDriver(cab.getDriver());
+			updateCab.setRegistrationNo(cab.getRegistrationNo());
 			cabRepo.save(updateCab);
 			return updateCab;
 		}
@@ -98,9 +88,9 @@ public class ICabServiceImpl implements ICabService{
 
 	@Override
 	public Cab viewCabByDriverId(int driverId) throws CabBookingException{
-		Optional<Cab> check = cabRepo.findById(driverId);
-		if(check.isPresent()) {
-			return check.get();
+		List<Cab>check = cabRepo.findAll().stream().filter(e->e.getDriver().getUserId()==driverId).collect(Collectors.toList());;
+		if(!check.isEmpty()) {
+			return check.get(0);
 		}
 		else {
 			throw new CabBookingException("Cab not found by driverID");

@@ -1,5 +1,7 @@
 package com.cabbooking.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,7 @@ public class UserController{
 	IUserServiceImpl iUserServiceImpl;
 	
 	@PostMapping("/register")
-	public UserDTO registerUser(@RequestBody User user){
+	public UserDTO registerUser(@Valid @RequestBody User user){
 		return iUserServiceImpl.registerUser(user);
 	}
 	
@@ -31,7 +33,7 @@ public class UserController{
 		return iUserServiceImpl.signIn(userName, password);
 	}
 	
-	@GetMapping("/usersingout/{UserId}")
+	@GetMapping("/usersingout/{userId}")
 	public String signOut(@PathVariable("userId") int userId) throws UserBookingException{
 		return iUserServiceImpl.signOut(userId);
 	}

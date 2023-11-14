@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +27,12 @@ public class RideController {
 	IRideServiceImpl iRideServiceImpl;
 	
 	@PostMapping("/add")
-	public Ride addRide(@RequestBody Ride ride) {
+	public Ride addRide(@Valid @RequestBody Ride ride) {
 		return iRideServiceImpl.addRide(ride);
 	}
 	
 	@PutMapping("/update/{rideId}")
-	public Ride updateRide(@ RequestBody Ride ride,@PathVariable("rideId") int rideId) throws RideBookingException{
+	public Ride updateRide( @Valid @RequestBody Ride ride,@PathVariable("rideId") int rideId) throws RideBookingException{
 		return iRideServiceImpl.updateRide(ride, rideId);
 	}
 	
@@ -66,7 +68,7 @@ public class RideController {
 	}
 	
 	@GetMapping("/viewbydate/{date}")
-	public List<Ride> viewRidesByDate(@PathVariable("date")LocalDateTime date) throws RideBookingException{
+	public List<Ride> viewRidesByDate(@PathVariable("date") LocalDateTime date) throws RideBookingException{
 		return viewRidesByDate(date);
 	}
 	

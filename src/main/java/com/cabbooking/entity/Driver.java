@@ -1,14 +1,19 @@
 package com.cabbooking.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@PrimaryKeyJoinColumn
 @Entity
 public class Driver extends User{
-	
+	@NotBlank(message = "Driver name cannot be blank")
 	private String driverName;
+	@NotBlank(message = "License number cannot be blank")
 	private String licenseNo;
+	@NotNull(message = "Driver availability cannot be null")
 	private Boolean driverAvailability; 
 	
 	

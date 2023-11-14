@@ -2,8 +2,12 @@ package com.cabbooking.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,15 +28,16 @@ public class CabController {
 	ICabServiceImpl iCabServiceImpl;
 	
 	@PostMapping("/register")
-	public Cab addCab(@RequestBody Cab cab) throws CabBookingException {
-		return iCabServiceImpl.addCab(cab);
+	public Cab addCab( @Valid @RequestBody Cab cab) throws CabBookingException {
+		return iCabServiceImpl.addCab(cab);//201
 	}
+	
 	
 	@PutMapping("/update/{cabId}")
-	public Cab updateCab(@RequestBody Cab cab,@PathVariable("cabId") int cabId) throws CabBookingException{
-		return iCabServiceImpl.updateCab(cab,cabId);
+	public Cab updateCab(@Valid  @RequestBody Cab cab,@PathVariable("cabId") int cabId) throws CabBookingException{
+		return iCabServiceImpl.updateCab(cab,cabId);//200
 	}
-	
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@GetMapping("/viewlist")
 	public List<Cab> viewCabs()throws CabBookingException{
 		return iCabServiceImpl.viewCabs();
@@ -44,8 +49,8 @@ public class CabController {
 	}
 	
 	@GetMapping("/viewlistbylocation/{curentLocation}")
-	public ResponseEntity<String> viewCabByCurrentLocation(@PathVariable("currentLocation") String currentLocation) throws CabBookingException{
-		return (ResponseEntity<String>) iCabServiceImpl.viewCabByCurrentLocation(currentLocation);
+	public  List<Cab> viewCabByCurrentLocation(@PathVariable("currentLocation") String currentLocation) throws CabBookingException{
+		return iCabServiceImpl.viewCabByCurrentLocation(currentLocation);
 	}
 	
 	@GetMapping("/viewbydriverid/{driverId}")

@@ -2,6 +2,8 @@ package com.cabbooking.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +28,12 @@ public class CustomerController  {
 	ICustomerServiceImpl iCustomerServiceimpl;
 	
 	@PostMapping("/register")
-	public CustomerDTO registerCustomer(@RequestBody Customer customer) {
+	public CustomerDTO registerCustomer( @Valid @RequestBody Customer customer) {
 		return iCustomerServiceimpl.registerCustomer(customer);
 	}
 	
 	@PutMapping("/update/{custId}")
-	public CustomerDTO updateCustomer(@RequestBody Customer customer, @PathVariable("custId") int customerId) throws CustomerBookingException{
+	public CustomerDTO updateCustomer(@Valid @RequestBody Customer customer, @PathVariable("custId") int customerId) throws CustomerBookingException{
 		return iCustomerServiceimpl.updateCustomer(customer,customerId);
 	}
 	
