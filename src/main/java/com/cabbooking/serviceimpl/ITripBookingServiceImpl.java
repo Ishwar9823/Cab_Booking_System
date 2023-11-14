@@ -148,19 +148,32 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 		
 	}
 
-	@Override
+	
+	
 	public List<TripBooking> viewBookingsByCustomerBasedOnDates(Integer customerId, LocalDate fromDate,
-			LocalDate toDate) throws TripBookingException{
-		
-		
-		List<TripBooking> list = tripBookingRepo.findAll().stream().filter(e->e.getCustomer().getUserId()==customerId&&e.getStartDateTime().toLocalDate().equals(toDate)).toList();
-		if(!list.isEmpty()) {
-			return list;
-		}
-		else {
-			throw new TripBookingException("Trips not found by Customer");
-		}
+	        LocalDate toDate) throws TripBookingException {
+
+	    List<TripBooking> list = tripBookingRepo.findAll()
+	            .stream()
+	            .filter(e -> e.getCustomer().getUserId() == customerId &&
+	                    e.getStartDateTime().toLocalDate().isEqual(fromDate) &&
+	                    !e.getStartDateTime().toLocalDate().isAfter(toDate))
+	            .toList();
+
+	    if (!list.isEmpty()) {
+	        return list;
+	    } else {
+	        throw new TripBookingException("Trips not found fromDate "+fromDate+" to "+toDate+" Customer");
+	    }
 	}
+
+
+	
+
+
+
+
+
 
 	
 }

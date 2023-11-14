@@ -127,15 +127,17 @@ public class IRideServiceImpl implements IRideService {
 	}
 
 	@Override
-	public List<Ride> viewRidesByDate(LocalDate date) throws RideBookingException{
-		
-		List<Ride> listByDate =  rideRepo.findAll().stream().filter(e->e.getStartTime().toLocalDate().isEqual(date)).collect(Collectors.toList());
-		if(!listByDate.isEmpty()) {
-			return listByDate;
-		}
-		else {
-			throw new RideBookingException("rides not found on "+date);
-		}
+	public List<Ride> viewRidesByDate(LocalDate date) throws RideBookingException {
+	    List<Ride> listByDate = rideRepo.findAll()
+	            .stream()
+	            .filter(e -> e.getStartTime().toLocalDate().isEqual(date))
+	            .collect(Collectors.toList());
+
+	    if (!listByDate.isEmpty()) {
+	        return listByDate;
+	    } else {
+	        throw new RideBookingException("rides not found on " + date);
+	    }
 	}
 
 	

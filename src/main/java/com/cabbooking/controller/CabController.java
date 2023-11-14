@@ -48,10 +48,18 @@ public class CabController {
 		return iCabServiceImpl.viewCabByType(cabType);
 	}
 	
-	@GetMapping("/viewlistbylocation/{curentLocation}")
-	public  List<Cab> viewCabByCurrentLocation(@PathVariable("currentLocation") String currentLocation) throws CabBookingException{
-		return iCabServiceImpl.viewCabByCurrentLocation(currentLocation);
+	@GetMapping("/example/{currentLocation}")
+	public ResponseEntity<String> viewCabByCurrentLocation(@PathVariable("currentLocation") String currentLocation) {
+	    try {
+	        List<Cab> cabs = iCabServiceImpl.viewCabByCurrentLocation(currentLocation);
+	        // Your logic to process cabs and return a response
+	        return ResponseEntity.ok("Successfully retrieved cabs");
+	    } catch (CabBookingException e) {
+	        // Handle the exception, log it, and return an error response
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	    }
 	}
+
 	
 	@GetMapping("/viewbydriverid/{driverId}")
 	public Cab viewCabByDriverId(@PathVariable("driverId") int driverId) throws CabBookingException{

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,9 +69,11 @@ public class RideController {
 	}
 	
 	@GetMapping("/viewbydate/{date}")
-	public List<Ride> viewRidesByDate(@PathVariable("date") LocalDateTime date) throws RideBookingException{
-		return viewRidesByDate(date);
+	public List<Ride> viewRidesByDate(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws RideBookingException {
+		
+	    return iRideServiceImpl.viewRidesByDate(date);
 	}
+
 	
 	
 	
@@ -81,7 +84,7 @@ public class RideController {
 	
 	
 	
-	
+
 	
 	
 	

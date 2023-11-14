@@ -9,10 +9,13 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.mockito.exceptions.base.MockitoException;
+import org.mockito.junit.jupiter.MockitoExtension;
+//import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cabbooking.entity.Cab;
 import com.cabbooking.exception.CabBookingException;
@@ -20,7 +23,9 @@ import com.cabbooking.repository.CabRepo;
 import com.cabbooking.util.CabType;
 import com.cabbooking.serviceimpl.ICabServiceImpl;
 
-@SpringBootTest
+
+
+@ExtendWith(MockitoExtension.class)
 class ICabServiceImplTest {
 
     @Mock

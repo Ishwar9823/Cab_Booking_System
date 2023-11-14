@@ -75,16 +75,18 @@ public class ICabServiceImpl implements ICabService{
 	}
 
 	@Override
-	public List<Cab> viewCabByCurrentLocation(String currentLocation) throws CabBookingException{
-		List<Cab> viewCabsByLoc = new ArrayList<>();
-		viewCabsByLoc = cabRepo.findAll().stream().filter(e->e.getCurrentLocation().equals(currentLocation)).collect(Collectors.toList());
-		if(!viewCabsByLoc.isEmpty()) {
-			return viewCabsByLoc;
-		}
-		else {
-			throw new CabBookingException("Cab not found at this location");
-		}
+	public List<Cab> viewCabByCurrentLocation(String currentLocation) throws CabBookingException {
+	    List<Cab> viewCabsByLoc = List.copyOf(cabRepo.findAll().stream()
+	                                       .filter(e -> e.getCurrentLocation().equals(currentLocation))
+	                                       .collect(Collectors.toList()));
+
+	    if (!viewCabsByLoc.isEmpty()) {
+	        return viewCabsByLoc;
+	    } else {
+	        throw new CabBookingException("No cabs found at location: " + currentLocation);
+	    }
 	}
+
 
 	@Override
 	public Cab viewCabByDriverId(int driverId) throws CabBookingException{

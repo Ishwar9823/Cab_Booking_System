@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +39,7 @@ public class TripBookingController {
 	}
 	
 	@PutMapping("/cancletrip/{tripBookingId}")
-	public TripBooking cancleTripBooking(@PathVariable("tripBookingid") int tripBookingId) throws TripBookingException{
+	public TripBooking cancleTripBooking(@PathVariable("tripBookingId") int tripBookingId) throws TripBookingException{
 		return iTripBookingServiceImpl.cancleTripBooking(tripBookingId);
 	}
 	
@@ -48,7 +49,7 @@ public class TripBookingController {
 	}
 	
 	@GetMapping("/viewbybookingid/{tripBookingId}")
-	public TripBooking viewBookingByBookingId(@PathVariable("tripBookingid") int tripBookingId) throws TripBookingException{
+	public TripBooking viewBookingByBookingId(@PathVariable("tripBookingId") int tripBookingId) throws TripBookingException{
 		return iTripBookingServiceImpl.viewBookingByBookingId(tripBookingId);
 	}
 	
@@ -73,7 +74,7 @@ public class TripBookingController {
 	}
 	
 	@GetMapping("/viewlistbyidanddate/{custId}/{fromDate}/{toDate}")
-	public List<TripBooking> viewBookingsByCustomerBasedOnDates(@PathVariable("custId") int customerId,@PathVariable("fromDate") LocalDate fromDate,@PathVariable("toDate") LocalDate toDate)
+	public List<TripBooking> viewBookingsByCustomerBasedOnDates(@PathVariable("custId") int customerId,@PathVariable("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,@PathVariable("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate toDate)
 			throws TripBookingException{
 		return iTripBookingServiceImpl.viewBookingsByCustomerBasedOnDates(customerId, fromDate, toDate);
 	}

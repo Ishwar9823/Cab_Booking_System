@@ -9,9 +9,11 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cabbooking.dto.DriverDTO;
@@ -20,7 +22,8 @@ import com.cabbooking.exception.DriverBookingException;
 import com.cabbooking.repository.DriverRepo;
 import com.cabbooking.serviceimpl.IDriverServiceImpl;
 
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
 class IDriverServiceImplTest {
 
     @Mock
